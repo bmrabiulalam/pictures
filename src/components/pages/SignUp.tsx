@@ -17,6 +17,7 @@ const SignUp = () => {
   useEffect(() => {
     return () => {
       if(error) {
+        console.log('signup useefect error: ', error);
         dispatch(setError(''));
       }
     }
@@ -25,6 +26,7 @@ const SignUp = () => {
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     if(error) {
+      console.log('signup submitHandler error: ', error);
       dispatch(setError(''));
     }
     setLoading(true);

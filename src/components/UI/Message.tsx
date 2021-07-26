@@ -1,9 +1,9 @@
-interface Message {
+interface MessageType {
     msg: string;
     type: 'danger' | 'success';
 }
 
-export default function Message({msg, type}: Message) {
+export default function Message({msg, type}: MessageType) {
     let typeClass = '';
 
     if(type === 'danger') typeClass = 'is-danger';

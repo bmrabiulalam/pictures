@@ -1,4 +1,4 @@
-import { AuthAction, AuthState, SET_USER, SET_LOADING, SIGN_OUT, SET_ERROR, NEED_VERIFICATION, SET_SUCCESS } from '../types';
+import { AuthAction, AuthState, SET_USER, SET_LOADING, SIGN_OUT, SET_ERROR, NEED_VERIFICATION, SET_SUCCESS } from '../types/authTypes';
 
 const initialState: AuthState = {
   user: null,
@@ -9,7 +9,7 @@ const initialState: AuthState = {
   success: ''
 }
 
-export default (state = initialState, action: AuthAction) => {
+const authReducer = (state = initialState, action: AuthAction) => {
   switch(action.type) {
     case SET_USER:
       return {
@@ -48,3 +48,5 @@ export default (state = initialState, action: AuthAction) => {
       return state;
   }
 }
+
+export default authReducer;

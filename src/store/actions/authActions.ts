@@ -10,12 +10,11 @@ import {
     SET_ERROR, 
     NEED_VERIFICATION, 
     SET_SUCCESS 
-} from '../types';
+} from '../types/authTypes';
 import { RootState } from '..';
 import firebase from '../../firebase/config';
 
 export type AuthThunk = ThunkAction<void, RootState, unknown, AuthAction>;
-const dbUserCollection = firebase.firestore().collection("users");
 
 // Create user
 export const signup = (data: SignUpData, onError: () => void): AuthThunk => {
@@ -30,14 +29,14 @@ export const signup = (data: SignUpData, onError: () => void): AuthThunk => {
                     id: res.user.uid,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 }
-                await dbUserCollection.doc(res.user.uid).set(userData);
+                await firebase.firestore().collection("users").doc(res.user.uid).set(userData);
                 await res.user.sendEmailVerification();
                 dispatch({type: NEED_VERIFICATION});
                 dispatch({type: SET_USER, payload: userData});
             }
         } catch (err) {
-            console.log(err);
-            onError();
+            console.log(err, onError);
+            dispatch(setLoading(false));
             dispatch(setError(err.message));
         }
     }
@@ -56,6 +55,7 @@ export const signin = (data: SignInData, onError: () => void): AuthThunk => {
             await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
         } catch (err) {
             console.log(err);
+            dispatch(setLoading(false));
             dispatch(setError(err.message));
         }
     }
@@ -93,7 +93,7 @@ export const getUserById = (id: string): AuthThunk => {
     return async dispatch => {
         try{
             dispatch(setLoading(true));
-            const user = await dbUserCollection.doc(id).get();
+            const user = await firebase.firestore().collection("users").doc(id).get();
             if(user.exists){
                 const userData = user.data() as User;
                 dispatch({type: SET_USER, payload: userData});
