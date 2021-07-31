@@ -24,7 +24,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         if(!imagesLoaded) dispatch(getImage());
-    }, []);
+    }, [imagesLoaded, dispatch]);
 
     useEffect(() => {
         if(images.length > 0) {
@@ -33,7 +33,7 @@ const Dashboard = () => {
         } else {
             setUserImages([]);
         }
-    }, [images]);
+    }, [images, user]);
 
     useEffect(() => {
         if(success){

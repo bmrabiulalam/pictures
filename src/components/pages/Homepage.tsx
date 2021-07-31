@@ -13,7 +13,7 @@ const Homepage = () => {
 
     useEffect(() => {
         if(!imagesLoaded) dispatch(getImage());
-      }, []);
+      }, [imagesLoaded, dispatch]);
 
     return (
         <section className="section">

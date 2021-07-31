@@ -15,16 +15,15 @@ export type GalleryThunk = ThunkAction<void, RootState, unknown, GalleryAction>;
 // Add/upload image
 export const addImage = (
   files: FileList,
-  user: User | null,
+  user: User,
   onProgress: (num: number, file: File) => void
 ): GalleryThunk => {
   return async (dispatch) => {
     Array.from(files).forEach(async (file: File) => {
-      const filePath = `images/${user?.id}/${new Date().getTime()}-${
-        file.name
-      }`;
-      const storageRef = firebase.storage().ref(filePath);
-      const uploadTask = storageRef.put(file);
+      const filePath = `images/${user.id}/${new Date().getTime()}-${file.name}`;
+      console.log(filePath);
+      const storageRef = firebase.storage().ref();
+      const uploadTask = storageRef.child(filePath).put(file);
 
       uploadTask.on(
         "state_changed",
@@ -46,8 +45,8 @@ export const addImage = (
                   imageUrl: downloadURL,
                   fileName: file.name,
                   filePath: filePath,
-                  uploaderName: user?.firstName,
-                  uploaderId: user?.id,
+                  uploaderName: user.firstName,
+                  uploaderId: user.id,
                   createdAt: new Date().getTime(),
                 };
                 const ref = await firebase
@@ -82,6 +81,7 @@ export const getImage = (): GalleryThunk => {
           uploaderName,
           uploaderId,
         } = doc.data();
+
         arr.push({
           createdAt,
           fileName,

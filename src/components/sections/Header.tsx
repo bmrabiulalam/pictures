@@ -7,7 +7,6 @@ import Button from '../UI/Button';
 
 export default function Header() {
     const history = useHistory();
-    // const dispatch = useAppDispatch();
     const dispatch = useDispatch();
     const { authenticated } = useAppSelector(state => state.auth);
 

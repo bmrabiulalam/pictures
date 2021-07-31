@@ -1,5 +1,6 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router";
 import Input from '../UI/Input';
 import Button from '../UI/Button';
 import Message from '../UI/Message';
@@ -7,6 +8,7 @@ import { signup, setError } from '../../store/actions/authActions';
 import { useAppSelector } from '../../hooks/hooks';
 
 const SignUp = () => {
+  const history = useHistory();
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +32,10 @@ const SignUp = () => {
       dispatch(setError(''));
     }
     setLoading(true);
-    dispatch(signup({ email, password, firstName }, () => setLoading(false)));
+    dispatch(signup({ email, password, firstName }, () => {
+      setLoading(false);
+      history.replace('/');
+    }));
   }
 
   return(

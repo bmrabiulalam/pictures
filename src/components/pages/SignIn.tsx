@@ -6,8 +6,10 @@ import { setError, signin } from '../../store/actions/authActions';
 import Button from '../UI/Button';
 import Input from '../UI/Input';
 import Message from '../UI/Message';
+import { useHistory } from "react-router";
 
 const SignIn = () => {
+    const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -26,7 +28,10 @@ const SignIn = () => {
             dispatch(setError(''));
         }
         setLoading(true);
-        dispatch(signin({email, password}, () => setLoading(false)));
+        dispatch(signin({email, password}, () => {
+            setLoading(false);
+            history.replace('/');
+        }));
     }
 
     return (

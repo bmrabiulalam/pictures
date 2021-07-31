@@ -39,7 +39,17 @@ const UploadImagesModal = ({ onClose }: UploadImagesModalProps) => {
     const submitHandler = (e: FormEvent) => {
         e.preventDefault();
         if(files && files.length > 0){
-            dispatch(addImage(files, user, (progress, file) => {
+            const currentUser = 
+            user !== null 
+            ? user 
+            : {
+                firstName: '',
+                email: '',
+                id: '',
+                createdAt: ''
+              };
+              
+            dispatch(addImage(files, currentUser, (progress, file) => {
                 const copyOfFilesArr = [...filesArr];
                 const findFile = copyOfFilesArr.find(f => f.name === file.name);
                 if(findFile) {
@@ -61,7 +71,7 @@ const UploadImagesModal = ({ onClose }: UploadImagesModalProps) => {
                     filesArr.length > 0 && 
                     <ul className="mt-3 mb-3">
                         {
-                            filesArr.map((file: Image, index) => {
+                            filesArr.map((file: Image, index) => (
                                 <li key={index} className="mb-2">
                                     <p className="is-size-7 mb-1">
                                         {file.name}
@@ -69,7 +79,7 @@ const UploadImagesModal = ({ onClose }: UploadImagesModalProps) => {
                                     </p>
                                     <progress className="progress is-primary is-small" value={file.progress} max="100">{file.progress}%</progress>
                                 </li>
-                            })
+                            ))
                         }
                     </ul>
                 }
