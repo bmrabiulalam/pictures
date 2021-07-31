@@ -1,9 +1,9 @@
 import React, { MouseEvent } from 'react';
 
 interface CardProps {
+    imageUrl: string;
     onDelete: (e: MouseEvent<HTMLAnchorElement>) => void;
     onImageClick: () => void;
-    imageUrl: string;
     publicCard?: boolean;
     uploader?: string;
 }

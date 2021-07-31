@@ -1,18 +1,30 @@
-interface MessageType {
-    msg: string;
-    type: 'danger' | 'success';
+import React, { FC } from 'react';
+
+interface MessageProps {
+  msg: string;
+  type: 'danger' | 'success' | 'info';
 }
 
-export default function Message({msg, type}: MessageType) {
-    let typeClass = '';
+const Message: FC<MessageProps> = ({ msg, type }) => {
+  let typeClass = '';
 
-    if(type === 'danger') typeClass = 'is-danger';
-    
-    if(type === 'success') typeClass = 'is-success';
+  if(type === 'danger') {
+    typeClass = 'is-danger';
+  }
 
-    return (
-        <article className={`message ${typeClass}`}>
-            <div className="message-body">{msg}</div>
-        </article>
-    )
+  if(type === 'success') {
+    typeClass = 'is-success';
+  }
+
+  if(type === 'info') {
+    typeClass = 'is-info';
+  }
+
+  return(
+    <article className={`message ${typeClass}`}>
+      <div className="message-body">{msg}</div>
+    </article>
+  );
 }
+
+export default Message;
