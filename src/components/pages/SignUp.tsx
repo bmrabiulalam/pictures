@@ -32,10 +32,15 @@ const SignUp = () => {
       dispatch(setError(''));
     }
     setLoading(true);
-    dispatch(signup({ email, password, firstName }, () => {
-      setLoading(false);
-      history.replace('/');
-    }));
+    dispatch(signup(
+      { email, password, firstName }, 
+      () => {
+          history.replace({ pathname: '/dashboard' });
+      }, 
+      () => {
+        setLoading(false); 
+      }
+    ));
   }
 
   return(

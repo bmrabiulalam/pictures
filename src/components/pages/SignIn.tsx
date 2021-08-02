@@ -28,10 +28,15 @@ const SignIn = () => {
             dispatch(setError(''));
         }
         setLoading(true);
-        dispatch(signin({email, password}, () => {
-            setLoading(false);
-            history.replace('/');
-        }));
+        dispatch(signin(
+            {email, password}, 
+            () => {
+                history.replace({ pathname: '/dashboard' });
+            }, 
+            () => {
+                setLoading(false);
+            }
+        ));
     }
 
     return (

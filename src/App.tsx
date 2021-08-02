@@ -45,7 +45,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router basename="/pictures">
       <Header />
       <Switch>
         <Route path="/" exact>
